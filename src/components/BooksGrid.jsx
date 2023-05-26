@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import BookCard from "./BookCard";
-import { getBooks } from "../api/apiCalls";
 import Modal from "react-modal";
+import useGoogleBooks from "../hooks/useGoogleBooks";
 
 const customStyles = {
     content: {
@@ -14,26 +14,9 @@ const customStyles = {
     },
 };
 
-export default function BooksGrid({ query }) {
+export default function BooksGrid({ query, bookLimit }) {
     const [modalIsOpen, setIsOpen] = useState(false);
-    const [books, setBooks] = useState([]);
-    const [error, setError] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
-
-    useEffect(() => {
-        setIsLoading(true);
-        setError(false);
-        getBooks(query)
-            .then((books) => {
-                setBooks(books);
-            })
-            .catch((err) => {
-                setError(true);
-            })
-            .finally(() => {
-                setIsLoading(false);
-            });
-    }, [query]);
+    const {books, error, isLoading} = useGoogleBooks(query, bookLimit)
 
     function closeModal() {
         setIsOpen(false);

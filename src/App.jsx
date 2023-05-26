@@ -6,11 +6,12 @@ import { useState } from "react";
 
 function App() {
     const [query, setQuery] = useState("quilting");
+    const [bookLimit, setBookLimit] = useState(10)
     return (
         <div className="App">
             <Header title="Book Store" />
-            <QueryBar setQuery={setQuery} />
-            <BooksGrid query={query} />
+            <QueryBar setQuery={setQuery} setBookLimit={setBookLimit} />
+            <BooksGrid query={query} bookLimit={bookLimit} />
         </div>
     );
 }
